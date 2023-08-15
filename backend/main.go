@@ -7,6 +7,7 @@ import (
 	"backend/pkg/websocket"
 	"embed"
 	"fmt"
+	"log"
 
 	"github.com/gin-gonic/gin"
 	flag "github.com/spf13/pflag"
@@ -26,6 +27,8 @@ var (
 	BuildTime  = "n/a"
 )
 
+var logger = log.New(gin.DefaultWriter, "[main] ", log.LstdFlags|log.Lmsgprefix)
+
 func run(addr string) error {
 	gin.SetMode(Mode)
 	r := gin.Default()
@@ -34,6 +37,7 @@ func run(addr string) error {
 	api.Route(r, io)
 	fileserver.Route(r, static, Mode)
 
+	logger.Printf("Server is running at %s\n", addr)
 	return r.Run(addr)
 }
 
@@ -48,8 +52,7 @@ func main() {
 		return
 	}
 
-	fmt.Printf("Server is running at %s\n", *addr)
 	if err := run(*addr); err != nil {
-		fmt.Printf("Oops, there's an error: %v\n", err)
+		logger.Printf("Oops, there's an error: %v\n", err)
 	}
 }

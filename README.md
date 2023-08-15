@@ -1,8 +1,15 @@
 # go-next-monorepo
 
-Use golang as backend, nextjs SSG for frontend, both in a monorepo. Build all file including static frontend into a single executable file
+Compile the frontend using next (SSG), and then put it into the Go backend to compile into a single executable file.
 
-# frontend
+# feature
+
+-   output single executable file
+-   single port in dev mode
+-   hot reload when file change in dev mode
+-   small docker image size(~14MB)
+
+## frontend
 
 **Notice** For SSG, do not use next api route
 
@@ -10,8 +17,9 @@ Use golang as backend, nextjs SSG for frontend, both in a monorepo. Build all fi
 -   ts
 -   eslint
 -   tailwindcss
+-   pnpm
 
-# backend
+## backend
 
 -   gin
 -   go embed
@@ -27,4 +35,4 @@ $ make build # build frontend, embed into backend server and build into a single
 # TODO
 
 -   add Action to build automatically
--   docker image ?
+-   ~~docker image ?~~
