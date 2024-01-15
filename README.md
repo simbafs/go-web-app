@@ -2,6 +2,14 @@
 
 Compile the frontend using next (SSG), and then put it into the Go backend to compile into a single executable file.
 
+# get start
+
+```
+$ make dep
+$ make dev
+$ make build
+```
+
 # feature
 
 -   output single executable file
@@ -24,15 +32,8 @@ Compile the frontend using next (SSG), and then put it into the Go backend to co
 -   gin
 -   go embed
 
-# Usage
-
-```
-$ make backend # start backend dev server(hotreload with nodemon, you need install in global)
-$ make frontend # start frontend dev server
-$ make build # build frontend, embed into backend server and build into a single executable file
-```
-
 # TODO
 
 -   add Action to build automatically
 -   ~~docker image ?~~
+-   add descripton of make command

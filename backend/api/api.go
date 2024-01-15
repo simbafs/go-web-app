@@ -1,7 +1,7 @@
 package api
 
 import (
-	"backend/pkg/websocket"
+	"backend/internal/websocket"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

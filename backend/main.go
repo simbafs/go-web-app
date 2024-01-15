@@ -4,7 +4,7 @@ import (
 	"backend/api"
 	"backend/internal/fileserver"
 	"backend/internal/staticfs"
-	"backend/pkg/websocket"
+	"backend/internal/websocket"
 	"embed"
 	"fmt"
 	"log"
