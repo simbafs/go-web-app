@@ -13,7 +13,7 @@ import (
 	flag "github.com/spf13/pflag"
 )
 
-// go embed ignore files begin with '_' or '.', 'all:' tells go embed to embed all files
+// go embed ignore files begin with '_' or '.'. Adding 'all:' in comment tells go embed to include all files
 
 //go:embed all:static/*
 var rawStatic embed.FS
