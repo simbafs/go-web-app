@@ -21,7 +21,7 @@ RUN apt-get update && \
     npm install -g pnpm
 
 COPY . .
-RUN make install && \
+RUN make dep && \
     make build 
 
 FROM scratch 

@@ -14,6 +14,7 @@ help:
 	@echo "  build         - Build both frontend and backend"
 	@echo "  buildFrontend - Build frontend"
 	@echo "  buildBackend  - Build backend"
+	@echo "  buildDist     - Build dist from docker"
 	@echo "Misc"
 	@echo "  doctor        - Check tools"
 	@echo "  clean         - Clean generated files"
@@ -29,7 +30,7 @@ dev:
 dep: depBackend depFrontend
 
 depBackend:
-	cd ./backend/ && go get
+	cd ./backend/ && go mod download
 	mkdir -p ./backend/static/ 
 	touch ./backend/static/.gitkeep
 
@@ -43,6 +44,9 @@ devFrontend:
 	cd ./frontend/ && $(npm) run dev
 
 build: buildFrontend buildBackend
+
+buildDist:
+	docker build --output out .
 
 buildFrontend:
 	cd ./frontend/ && NODE_ENV=production $(npm) run build
