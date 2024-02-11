@@ -18,6 +18,7 @@ help:
 	@echo "Misc"
 	@echo "  doctor        - Check tools"
 	@echo "  clean         - Clean generated files"
+	@echo "  format        - Format code"
 
 doctor:
 	@command -v tmux >/dev/null 2>&1 && echo "tmux is installed" || echo "tmux is NOT installed, the 'dev' target will not work"
@@ -55,6 +56,10 @@ buildBackend:
 	rm -rf ./backend/static/
 	mv ./frontend/out/ ./backend/static/
 	cd ./backend/ && ./build.sh
+
+format:
+	cd frontend && prettier --write src 
+	cd backend && gofmt -w .
 
 clean:
 	rm -rf ./main

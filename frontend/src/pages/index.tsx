@@ -2,9 +2,7 @@ import Image from 'next/image'
 import useSWR from 'swr'
 
 export default function Home() {
-	const { data, error } = useSWR('/api/hello', url =>
-		fetch(url).then(res => res.json())
-	)
+	const { data, error } = useSWR('/api/hello', url => fetch(url).then(res => res.json()))
 
 	return (
 		<>
