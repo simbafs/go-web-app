@@ -20,9 +20,20 @@ help:
 	@echo "  clean         - Clean generated files"
 	@echo "  format        - Format code"
 
+
+# @$(call check,"executable","the target that will not work, no comma is allowed")
+define check
+	@command -v $(1) > /dev/null 2>&1 && echo "detected $(1)" || echo "$(1) is NOT installed, the '$(2)' target will not work"
+	
+endef
+
 doctor:
-	@command -v tmux >/dev/null 2>&1 && echo "tmux is installed" || echo "tmux is NOT installed, the 'dev' target will not work"
-	@command -v nodemon >/dev/null 2>&1 && echo "nodemon is installed" || echo "nodemon is NOT installed, the 'dev' and 'devFrontend' targets will not work"
+	@$(call check,tmux,dev)
+	@$(call check,nodemon,devBackend)
+	@$(call check,go,depBackend and buildBackend)
+	@$(call check,pnpm,depFrontend and devFrontend and buildFrontend)
+	@$(call check,docker,buildDist)
+	@$(call check,prettier,format)
 
 dev: 
 	tmux split-window -h make devFrontend
