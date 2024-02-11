@@ -2,7 +2,6 @@ package websocket
 
 import (
 	"bytes"
-	"log"
 	"math/rand"
 	"time"
 
@@ -67,7 +66,7 @@ func (c *Client) readPump() {
 		_, message, err := c.conn.ReadMessage()
 		if err != nil {
 			if gwebsocket.IsUnexpectedCloseError(err, gwebsocket.CloseGoingAway, gwebsocket.CloseAbnormalClosure) {
-				log.Printf("error: %v", err)
+				logger.Printf("error: %v", err)
 			}
 			break
 		}

@@ -1,7 +1,7 @@
 package websocket
 
 import (
-	"log"
+	"backend/internal/log"
 	"math/rand"
 	"net/http"
 	"time"
@@ -9,6 +9,8 @@ import (
 	"github.com/gin-gonic/gin"
 	gwebsocket "github.com/gorilla/websocket"
 )
+
+var logger = log.New("websocket")
 
 var upgrader = gwebsocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool {
@@ -26,7 +28,7 @@ func init() {
 func serveWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		log.Println(err)
+		logger.Println(err)
 		return
 	}
 	client := NewClient(hub, conn)

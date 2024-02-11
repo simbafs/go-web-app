@@ -3,11 +3,11 @@ package main
 import (
 	"backend/api"
 	"backend/internal/fileserver"
+	"backend/internal/log"
 	"backend/internal/staticfs"
 	"backend/internal/websocket"
 	"embed"
 	"fmt"
-	"log"
 
 	"github.com/gin-gonic/gin"
 	flag "github.com/spf13/pflag"
@@ -27,7 +27,9 @@ var (
 	BuildTime  = "n/a"
 )
 
-var logger = log.New(gin.DefaultWriter, "[main] ", log.LstdFlags|log.Lmsgprefix)
+// var logger = log.New(gin.DefaultWriter, "[main] ", log.LstdFlags|log.Lmsgprefix)
+
+var logger = log.New("main")
 
 func run(addr string) error {
 	gin.SetMode(Mode)

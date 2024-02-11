@@ -1,4 +1,5 @@
 package fileserver
+
 // This package implements a route that directs incoming traffic to different destinations based on whether it's in development or release mode.
 // In development mode, it uses httputil.ReverseProxy. In release mode, it utilizes an embedded file server.
 
