@@ -50,12 +50,12 @@ buildDist:
 	docker build --output out .
 
 buildFrontend:
-	cd ./frontend/ && NODE_ENV=production $(npm) run build
+	cd ./frontend/ && sh build.sh
 
 buildBackend:
 	rm -rf ./backend/static/
 	mv ./frontend/out/ ./backend/static/
-	cd ./backend/ && ./build.sh
+	cd ./backend/ && sh build.sh
 
 format:
 	cd frontend && prettier --write src 
