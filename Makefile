@@ -34,6 +34,7 @@ doctor:
 	@$(call check,pnpm,depFrontend and devFrontend and buildFrontend)
 	@$(call check,docker,buildDist)
 	@$(call check,prettier,format)
+	@$(call check,bash,buildFrontend)
 
 dev: 
 	tmux split-window -h make devFrontend
@@ -66,7 +67,7 @@ buildFrontend:
 buildBackend:
 	rm -rf ./backend/static/
 	mv ./frontend/out/ ./backend/static/
-	cd ./backend/ && sh build.sh
+	cd ./backend/ && bash build.sh
 
 format:
 	cd frontend && prettier --write src 
