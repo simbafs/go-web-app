@@ -74,6 +74,10 @@ main.go 定義了一個函式 `run(addr string) error`，裡面會用 gin 開啟
 
 後端就是拿來放 API 的啦！按照我的設計，新增 API 全部都是放在 `backend/api/` 目錄下，你可按照 API endpoint 再去細分 `backend/api/user/`、`backend/api/post/` 之類的，總之，看你開心～
 
+### 靜態路由
+
+靜態路由根據編譯變數 `Mode` 會在 debug 模式和 release 模式有不同的表現。debug 模式下會全部轉發給 :3001，也就是 nextjs；在 release 模式下，會開啟一個 fileserver，根目錄是用 go embed 嵌入的 `/static`。
+
 ### 編譯變數
 
 `backend/main.go` 中定義了四個編譯變數，他們會在 `backend/build.sh` 中塞值進去，分別是
@@ -84,6 +88,56 @@ main.go 定義了一個函式 `run(addr string) error`，裡面會用 gin 開啟
 -   BuildTime：執行當下時間
 
 你可以執行編譯完的可執行擋 `./main -v` 看這些訊息
+
+# Makefile
+
+## doctor
+```
+$ make doctor
+```
+
+會檢查你的執行環境有沒有執行各項 make target 所需要的執行擋，他還會告訴你如果少了某個執行擋，什麼 target 可能無法運作
+
+## dep
+```
+$ make dep
+$ make depFrontend
+$ make depBackend
+```
+
+dep 系列的 target 會安裝相依套件，`make dep` 會自動執行 `make depFrontend` 和 `make depBackend`
+
+## dev
+```
+$ make dev
+$ make devFrontend
+$ make devBackend
+```
+
+`make devFrontend` 會執行 `npm run dev`，`make devBackend` 會用 nodemon 監看 `backend/` 目錄，並在有檔案更改時重新執行 `go run .`。`make dev` 會把當下的 tmux panel 垂直分割，左邊是 backend server，右邊是 frontend 的 dev server。如果你沒有用 tmux，可以修改 Makefile 中 `dev` target，改成 
+
+```
+dev: 
+    make devBackend& ; make devFrontend
+```
+
+這樣就不需要 tmux 了，不過 stdout 會全部混在一起，比較不好看。
+
+## build
+```
+$ make build
+$ make buildFrontend
+$ make buildBackend
+```
+
+build 系列會執行各自的 build.sh，詳細做了什麼請看 build.sh 了解。另外，如果不是用 `make build` 一次執行的話，請先執行 `make buildFrontend` 再執行 `make buildBackend`。
+
+## format
+```
+$ make format
+```
+
+format 會執行 `gofmt` 和 `prettier` 把前後端的程式碼整理一遍
 
 # TODO
 
