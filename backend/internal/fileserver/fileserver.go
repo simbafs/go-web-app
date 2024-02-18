@@ -4,6 +4,7 @@ package fileserver
 // In development mode, it uses httputil.ReverseProxy. In release mode, it utilizes an embedded file server.
 
 import (
+	"io/fs"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
@@ -22,11 +23,21 @@ func proxy(c *gin.Context) {
 	proxy.ServeHTTP(c.Writer, c.Request)
 }
 
-func Route(r *gin.Engine, static http.FileSystem, mode string) {
+func FileServer(assestFS fs.FS, mode string) gin.HandlerFunc {
 	// https://stackoverflow.com/questions/36357791/
 	if mode == gin.DebugMode {
-		r.Use(proxy)
+		return proxy
 	} else {
-		r.NoRoute(gin.WrapH(http.FileServer(static)))
+		return gin.WrapH(http.FileServer(http.FS(assestFS)))
 	}
+}
+
+// https://github.com/golang/go/issues/43431#issuecomment-752662261
+
+func CD(embedFS fs.FS, root string) fs.FS {
+	newFS, err := fs.Sub(embedFS, root)
+	if err != nil {
+		panic(err)
+	}
+	return newFS
 }

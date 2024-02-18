@@ -66,7 +66,7 @@ buildFrontend:
 
 buildBackend:
 	rm -rf ./backend/static/
-	cp ./frontend/out/ ./backend/static/
+	cp -r ./frontend/out/ ./backend/static/
 	cd ./backend/ && bash build.sh
 
 format:
