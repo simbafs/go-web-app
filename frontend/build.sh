@@ -4,9 +4,10 @@ npm=$(which pnpm)
 
 NODE_ENV=production $npm run build &&
 cd out &&
-	find . -maxdepth 1 -name "*.html" ! -name "index.html" ! -name "404.html" -exec sh -c '
+	find . -name "*.html" ! -name "index.html" ! -name "404.html" -exec sh -c '
     for i; do
-        f=$(basename "$i" .html)
+        f="${i%.*}"
+        echo $f
 
         mkdir -p -- "$f"
 
