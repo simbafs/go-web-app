@@ -2,7 +2,7 @@ package main
 
 import (
 	"backend/api"
-	"backend/internal/fileserver"
+	"backend/internal/assestserver"
 	"backend/internal/log"
 	"backend/internal/tree"
 	"backend/internal/websocket"
@@ -16,8 +16,7 @@ import (
 // go embed ignore files begin with '_' or '.'. Adding 'all:' in comment tells go embed to include all files
 
 //go:embed all:static/*
-var rawFS embed.FS
-var assestFS = fileserver.CD(rawFS, "static")
+var assestFS embed.FS
 
 var (
 	Mode       = "debug"
@@ -34,7 +33,7 @@ func run(addr string) error {
 
 	io := websocket.Route(r)
 	api.Route(r, io)
-	r.Use(fileserver.FileServer(assestFS, Mode))
+	r.Use(assestserver.New(assestserver.CD(assestFS, "static")))
 
 	logger.Printf("Server is running at %s\n", addr)
 	return r.Run(addr)
