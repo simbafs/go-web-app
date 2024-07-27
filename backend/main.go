@@ -5,7 +5,6 @@ import (
 	"backend/internal/assestserver"
 	"backend/internal/log"
 	"backend/internal/tree"
-	"backend/internal/websocket"
 	"embed"
 	"fmt"
 
@@ -31,8 +30,7 @@ func run(addr string) error {
 	gin.SetMode(Mode)
 	r := gin.Default()
 
-	io := websocket.Route(r)
-	api.Route(r, io)
+	api.Route(r)
 	r.Use(assestserver.New(assestserver.CD(assestFS, "static")))
 
 	logger.Printf("Server is running at %s\n", addr)
